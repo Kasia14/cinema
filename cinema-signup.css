@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 progress {    
-    width: 400px;
+    width: 210%;
     height: 20px;
     background: crimson;
   }
@@ -107,14 +107,11 @@ input:disabled.button{
     opacity: 0.5;
 }
 
-progress{
-    width: 200%;
-    animation: progress infinite;
-}
+
 
 .registration h4{
     color: red;
     display: flex;
     justify-content: center;
-    font-size: 150%;
+    font-size: 100%;
 }

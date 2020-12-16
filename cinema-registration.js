@@ -43,48 +43,65 @@ const checkPasswordStrength = function (password) {
 
 // czy password i re-password są takie same?Czy password ma 8 znaków? 
 // info pod ramkami że coś źle
-const correctness = function (event) {
+const correctnessPassword = function (event)  {
     let password = event.target;
-    const numberofCharacters = /.{8}/;
-    const zipCodeNumber = /^[0-9]{2}-[0-9]{3}$/;
-    const telephoneNumber = /(\+48)+(0-9){9}/;
-    if (yourPassword.value !== rePassword.value) {
+   
+   
+    if ( password.value.length < 8) {
+        password.style.borderBottom = "1px solid red";
+        rePassword.style.borderBottom = "1px solid red";
+        info.innerHTML = `Hasło jest za krótkie! (Min. 8 znaków)`;
+        btnSignUp.disabled = true;
+
+    }
+    else if (yourPassword.value !== rePassword.value) {
         password.style.borderBottom = "1px solid red";
         rePassword.style.borderBottom = "1px solid red";
         info.innerText = 'Hasłą są różne!'
         //alert('Hasła są różne')
         btnSignUp.disabled = true;
+    }else {
+        btnSignUp.disabled  = false;
+        info.innerHTML = '';
+        rePassword.style.borderBottom = "1px solid white";
+        password.style.borderBottom = "1px solid white";
     }
-    if (password < numberofCharacters) {
-        password.style.borderBottom = "1px solid red";
-        rePassword.style.borderBottom = "1px solid red";
-        info.innerHTML = `<h4>Hasło jest za krótkie! (Min. 8 znaków)<h4>`;
-        btnSignUp.disabled = true;
-
-    }
-    if (zipCode !== zipCodeNumber) {
+}
+  const corectnessZipCode = function(event) {
+      let zipCode = event.target;
+    const zipCodeNumber = /^[0-9]{2}-[0-9]{3}$/;
+    if (zipCodeNumber.test(zipCode.value) == false) {
         zipCode.style.borderBottom = "1px solid red";
-        info.innerHTML = `<h4>Nie poprawny format kodu pocztowego<h4>`;
+        info.innerHTML = `<h4>Nie poprawny format kodu pocztowego(XX-XXX)<h4>`;
         //alert('Nie poprawny format kodu pocztowego')
         btnSignUp.disabled = true;
     }
-    if (telephone !== telephoneNumber) {
+    else {
+        btnSignUp.disabled  = false;
+        info.innerHTML = '';
+        zipCode.style.borderBottom = "1px solid white";
+    }
+}
+const corectnessTelephone = function(event) {
+    const telephoneNumber = /^\+48\d{9}$/;
+    let telephone = event.target;
+    if (telephoneNumber.test(telephone.value) == false) {
         telephone.style.borderBottom = "1px solid red";
-        info.innerHTML = '<h4>Nie poprawny format telefonu</h4>';
+        info.innerHTML = '<h4>Nie poprawny format telefonu (+48XXXXXXXXX)</h4>';
        // alert("Niepoprawny format telefonu");
         btnSignUp.disabled = true;
     }
-}
-
-
-//zablokowanie przycisku sign up
-
-const buttonActivity = function () {
-    if (correctness == false) {
-        btnSignUp[disabled = "true"];
+    else {
+        btnSignUp.disabled  = false;
+        info.innerHTML = '';
+        telephone.style.borderBottom = "1px solid white";
     }
 }
 
+
+
+
 yourPassword.addEventListener('keyup', checkPasswordStrength);
-yourPassword.addEventListener('keyup', correctness);
-telephone.addEventListener('keyup', correctness);
+yourPassword.addEventListener('keyup', correctnessPassword);
+telephone.addEventListener('keyup', corectnessTelephone);
+zipCode.addEventListener('keyup', corectnessZipCode);
